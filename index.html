@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>vue.js app de tareas</title>
+</head>
+<body>
+    <div class="container">
+        <div id="app" class="col-sm-9 col-sm-offset-1">
+            <h1>{{nameApp}}</h1>
+
+            <form v-on:submit="addTask">
+                <input type="text" v-model="tareas.titulo">
+                <input type="submit" value="Agregar tarea" class="btn btn-success">
+            </form>
+
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <th>Hecho</th>
+                    <th>nombre</th>
+                    <th>Eliminar</th>
+                </thead>
+                <tbody>
+                    <tr v-for="tarea in tareas">
+                        <td>
+                            <input type="checkbox" v-model="tarea.hecho">
+                        </td>
+                        <td>
+                            {{tarea.titulo}}
+                        </td>
+                        <td>
+                            <a href="#" class="btn btn-danger" v-on:click="deleteTask(tarea)">Eliminar</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        new Vue({
+                el: "#app",
+                data: {
+                    nameApp: "app de tareas por vue",
+                    tareas: [
+                        {
+                            titulo: "tarea 1",
+                            hecho: false
+                        },
+                        {
+                            titulo: "tarea 2",
+                            hecho: true
+                        },
+                        {
+                            titulo: "tarea 3",
+                            hecho: false
+                        }
+                    ]
+                },
+                methods: {
+                    deleteTask: function (tarea) {
+                        this.tareas.splice(this.tareas.indexOf(tarea, 1))
+                    },
+                    addTask:function(e){
+                        e.preventDefault()
+                        this.tareas.push({
+                            titulo:this.tareas.titulo,
+                            hecho:false
+                        })
+                        this.tareas.titulo = " "
+                    }
+                }
+            })
+    </script>
+</body>
+</html>
